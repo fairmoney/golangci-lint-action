@@ -18,7 +18,6 @@ const modVersionRe = /github.com\/golangci\/golangci-lint\s(v.+)/
 
 const parseVersion = (s: string): Version => {
   if (s == "latest" || s == "") {
-    // TODO(ldez): it should be replaced with an explicit version (ex: v1.64.0)
     return null
   }
 
@@ -41,7 +40,6 @@ export const stringifyVersion = (v: Version): string => {
   return `v${v.major}.${v.minor}${v.patch !== null ? `.${v.patch}` : ``}`
 }
 
-// TODO(ldez): it should be updated to v2.0.0.
 const minVersion = {
   major: 1,
   minor: 28,
@@ -116,8 +114,7 @@ const getConfig = async (): Promise<Config> => {
     maxRetries: 5,
   })
   try {
-    // TODO(ldez): HEAD should be replaced with an explicit version (ex: v1.64.0).
-    const url = `https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/assets/github-action-config-v1.json`
+    const url = `https://raw.githubusercontent.com/golangci/golangci-lint/master/assets/github-action-config.json`
     const response: httpm.HttpClientResponse = await http.get(url)
     if (response.message.statusCode !== 200) {
       throw new Error(`failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`)
@@ -135,8 +132,6 @@ export async function findLintVersion(mode: InstallMode): Promise<VersionConfig>
 
   if (mode == InstallMode.GoInstall) {
     const v: string = core.getInput(`version`)
-    // TODO(ldez): latest should be replaced with an explicit version (ex: v1.64.0).
-    // TODO(ldez): AssetURL should be updated for v2.
     return { TargetVersion: v ? v : "latest", AssetURL: "github.com/golangci/golangci-lint" }
   }
 
