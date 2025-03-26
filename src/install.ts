@@ -22,9 +22,6 @@ const getAssetURL = (versionConfig: VersionConfig): string => {
   }
   let arch = os.arch()
   switch (arch) {
-    case "arm64":
-      arch = "arm64"
-      break
     case "x64":
       arch = "amd64"
       break

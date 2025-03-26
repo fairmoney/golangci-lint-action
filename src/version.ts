@@ -1,7 +1,6 @@
 import * as core from "@actions/core"
 import * as httpm from "@actions/http-client"
 import * as fs from "fs"
-import os from "os"
 import path from "path"
 
 import { InstallMode } from "./install"
@@ -140,14 +139,10 @@ export async function findLintVersion(mode: InstallMode): Promise<VersionConfig>
   // if the patched version is passed, just use it
   if (reqLintVersion?.major !== null && reqLintVersion?.minor != null && reqLintVersion?.patch !== null) {
     return new Promise((resolve) => {
-      let arch: string = "amd64"
-      if (os.arch() === "arm64") {
-        arch = "arm64"
-      }
       const versionWithoutV = `${reqLintVersion.major}.${reqLintVersion.minor}.${reqLintVersion.patch}`
       resolve({
         TargetVersion: `v${versionWithoutV}`,
-        AssetURL: `https://github.com/golangci/golangci-lint/releases/download/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-${arch}.tar.gz`,
+        AssetURL: `https://github.com/golangci/golangci-lint/releases/download/v${versionWithoutV}/golangci-lint-${versionWithoutV}-linux-amd64.tar.gz`,
       })
     })
   }
