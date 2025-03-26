@@ -257,7 +257,7 @@ You will also likely need to add the following `.gitattributes` file to ensure t
 
 ### `version`
 
-(optional)
+(required)
 
 The version of golangci-lint to use.
 
